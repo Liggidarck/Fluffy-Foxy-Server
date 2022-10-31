@@ -1,6 +1,6 @@
 package com.george.fluffy.foxy.server.security.jwt;
 
-import com.george.fluffy.foxy.server.security.services.UserDetailsServiceImpl;
+import com.george.fluffy.foxy.server.security.service.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

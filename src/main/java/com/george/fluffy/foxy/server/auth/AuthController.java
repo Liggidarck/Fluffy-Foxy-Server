@@ -17,7 +17,7 @@ import com.george.fluffy.foxy.server.palladium.model.user.UserPalladium;
 import com.george.fluffy.foxy.server.palladium.repository.user.RoleRepository;
 import com.george.fluffy.foxy.server.palladium.repository.user.UserPalladiumRepository;
 import com.george.fluffy.foxy.server.security.jwt.JwtUtils;
-import com.george.fluffy.foxy.server.security.services.UserDetailsImpl;
+import com.george.fluffy.foxy.server.security.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -66,14 +66,15 @@ public class AuthController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
+        return ResponseEntity.ok(new JwtResponse(
+                jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getEmail(),
+                userDetails.getZone(),
                 userDetails.getName(),
                 userDetails.getLastName(),
                 userDetails.getPatronymic(),
-                userDetails.getZone(),
+                userDetails.getEmail(),
                 roles));
     }
 

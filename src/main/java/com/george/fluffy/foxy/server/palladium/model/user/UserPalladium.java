@@ -18,22 +18,20 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "username")
 })
 public class UserPalladium {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String zone;
-
     private String name;
     private String lastName;
     private String patronymic;
     private String email;
     private String password;
-
     private String username;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(	name = "user_roles",
+    @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
@@ -47,7 +45,4 @@ public class UserPalladium {
         this.password = password;
         this.username = username;
     }
-
-
-
 }

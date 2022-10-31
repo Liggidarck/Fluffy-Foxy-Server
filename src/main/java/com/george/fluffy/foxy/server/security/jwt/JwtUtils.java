@@ -1,6 +1,6 @@
 package com.george.fluffy.foxy.server.security.jwt;
 
-import com.george.fluffy.foxy.server.security.services.UserDetailsImpl;
+import com.george.fluffy.foxy.server.security.service.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

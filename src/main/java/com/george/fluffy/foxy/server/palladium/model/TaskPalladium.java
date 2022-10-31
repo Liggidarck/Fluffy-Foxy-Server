@@ -35,8 +35,8 @@ public class TaskPalladium {
     private boolean urgent;
     private String dateDone;
 
-    private String executorId;
-    private String creatorId;
+    private int executorId;
+    private int creatorId;
 
     private String dateCreate;
     private String image;

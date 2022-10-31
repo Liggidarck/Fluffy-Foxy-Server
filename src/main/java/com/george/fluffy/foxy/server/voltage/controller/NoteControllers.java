@@ -3,7 +3,7 @@ package com.george.fluffy.foxy.server.voltage.controller;
 import com.george.fluffy.foxy.server.voltage.model.Note;
 import com.george.fluffy.foxy.server.voltage.repository.NoteRepository;
 import com.george.fluffy.foxy.server.voltage.service.NoteService;
-import com.george.fluffy.foxy.server.utils.ThereIsNoSuchObjectException;
+import com.george.fluffy.foxy.server.utils.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +24,6 @@ public class NoteControllers implements NoteService {
     @PreAuthorize("hasRole('DEVELOPER')")
     public Note getNoteById(@PathVariable long id) {
         Note note = noteRepository.findById(id).orElse(null);
-
-        if(note == null) {
-            throw new ThereIsNoSuchObjectException();
-        }
-
         return note;
     }
 

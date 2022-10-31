@@ -2,7 +2,7 @@ package com.george.fluffy.foxy.server.security;
 
 import com.george.fluffy.foxy.server.security.jwt.AuthEntryPointJwt;
 import com.george.fluffy.foxy.server.security.jwt.AuthTokenFilter;
-import com.george.fluffy.foxy.server.security.services.UserDetailsServiceImpl;
+import com.george.fluffy.foxy.server.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,7 +61,7 @@ public class WebSecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/fluffy_foxy/auth/**").permitAll()
-                .antMatchers("/foxy/test/**").permitAll()
+                .antMatchers("/foxy/test/**", "/foxy/palladium/users/**").permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());

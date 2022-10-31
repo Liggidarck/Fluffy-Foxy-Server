@@ -1,33 +1,31 @@
-package com.george.fluffy.foxy.server.security.services;
+package com.george.fluffy.foxy.server.security.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.george.fluffy.foxy.server.palladium.model.user.UserPalladium;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import com.george.fluffy.foxy.server.palladium.model.user.UserPalladium;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-public class UserDetailsImpl implements UserDetails{
+public class UserDetailsImpl implements UserDetails {
 
     private static final long serialVersionUID = 1L;
-    private Long id;
-    private String zone;
-    private String name;
-    private String lastName;
-    private String patronymic;
-    private String email;
+    private final Long id;
+    private final String zone;
+    private final String name;
+    private final String lastName;
+    private final String patronymic;
+    private final String email;
 
-    private String username;
+    private final String username;
     @JsonIgnore
-    private String password;
+    private final String password;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Long id, String zone, String name, String lastName,
                            String email, String patronymic, String password, String username,
@@ -120,12 +118,14 @@ public class UserDetailsImpl implements UserDetails{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
+    public boolean equals(Object obj) {
+        if (this == obj)
             return true;
-        if (o == null || getClass() != o.getClass())
+
+        if (obj == null || getClass() != obj.getClass())
             return false;
-        UserDetailsImpl user = (UserDetailsImpl) o;
+
+        UserDetailsImpl user = (UserDetailsImpl) obj;
         return Objects.equals(id, user.id);
     }
 

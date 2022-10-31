@@ -1,4 +1,4 @@
-package com.george.fluffy.foxy.server.security.services;
+package com.george.fluffy.foxy.server.security.service;
 
 import com.george.fluffy.foxy.server.palladium.model.user.UserPalladium;
 import com.george.fluffy.foxy.server.palladium.repository.user.UserPalladiumRepository;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     UserPalladiumRepository userRepository;
