@@ -20,7 +20,7 @@ import java.util.Set;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/foxy/palladium/users")
+@RequestMapping("/palladium/users")
 public class UserController {
 
     @Autowired
@@ -50,16 +50,17 @@ public class UserController {
         return userPalladiumRepository.findByRoles_Name(name);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/user")
     @PreAuthorize("hasRole('ROLE_DEVELOPER')")
-    public UserPalladium getUserById(@PathVariable long id) {
+    public UserPalladium getUserById(@RequestParam(value = "id") long id) {
         return userPalladiumRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User with id " + id + " not found"));
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/edit")
     @PreAuthorize("hasRole('ROLE_DEVELOPER')")
-    public ResponseEntity<?> editUser(@RequestBody SignupRequest user, @PathVariable long id) {
+    public ResponseEntity<?> editUser(@RequestBody SignupRequest user,
+                                      @RequestParam(value = "id") long id) {
 
         UserPalladium updateUser = userPalladiumRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User with id " + id + " not found"));
@@ -114,9 +115,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("User successfully edited");
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete")
     @PreAuthorize("hasRole('ROLE_DEVELOPER')")
-    public ResponseEntity<?> deleteUser(@PathVariable long id) {
+    public ResponseEntity<?> deleteUser(@RequestParam(value = "id") long id) {
         userPalladiumRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User with id " + id + " not found")
         );

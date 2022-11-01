@@ -61,7 +61,7 @@ public class WebSecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/fluffy_foxy/auth/**").permitAll()
-                .antMatchers("/foxy/test/**", "/foxy/palladium/users/**").permitAll()
+                .antMatchers("/palladium/tasks/**", "/palladium/users/**").permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());
