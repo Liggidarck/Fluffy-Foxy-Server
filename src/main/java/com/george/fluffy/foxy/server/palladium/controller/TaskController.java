@@ -87,10 +87,17 @@ public class TaskController {
         return taskRepository.findByStatus(status);
     }
 
-    @GetMapping("/get")
+    @GetMapping("/get/byZone")
     @PreAuthorize("hasRole('ROLE_DEVELOPER')")
     public List<TaskPalladium> getTasksByZone(@RequestParam(value = "zone") String zone) {
         return taskRepository.findByZoneLike(zone);
+    }
+
+    @GetMapping("/get/byZoneAndStatus")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    public List<TaskPalladium> getByZoneLikeAndStatusLike(@RequestParam(value = "zone") String zone,
+                                                          @RequestParam(value = "status") String status) {
+        return taskRepository.getByZoneLikeAndStatusLike(zone, status);
     }
 
     @GetMapping("/get/all")
@@ -99,9 +106,9 @@ public class TaskController {
         return (List<TaskPalladium>) taskRepository.findAll();
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/byId")
     @PreAuthorize("hasRole('ROLE_DEVELOPER')")
-    public TaskPalladium getTask(@PathVariable long id) {
+    public TaskPalladium getTask(@RequestParam(value = "id") long id) {
         return taskRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Task with id " + id + " not found")
         );

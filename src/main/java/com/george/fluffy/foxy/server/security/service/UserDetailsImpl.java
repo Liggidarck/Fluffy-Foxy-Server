@@ -53,8 +53,8 @@ public class UserDetailsImpl implements UserDetails {
                 user.getLastName(),
                 user.getPatronymic(),
                 user.getEmail(),
-                user.getPassword(),
                 user.getUsername(),
+                user.getPassword(),
                 authorities);
     }
 
