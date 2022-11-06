@@ -27,8 +27,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String zone, String name, String lastName,
-                           String email, String patronymic, String password, String username,
+    public UserDetailsImpl(Long id, String zone, String name, String lastName, String patronymic, String email, String password, String username,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.zone = zone;
@@ -53,8 +52,8 @@ public class UserDetailsImpl implements UserDetails {
                 user.getLastName(),
                 user.getPatronymic(),
                 user.getEmail(),
-                user.getUsername(),
                 user.getPassword(),
+                user.getUsername(),
                 authorities);
     }
 
