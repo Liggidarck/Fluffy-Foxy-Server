@@ -15,8 +15,6 @@ public interface UserPalladiumRepository extends JpaRepository<UserPalladium, Lo
 
     List<UserPalladium> findByRoles_Name(ERole name);
 
-
-
     Boolean existsByEmail(String email);
 
     Boolean existsByUsername(String username);

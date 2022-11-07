@@ -24,7 +24,7 @@ public class TaskController {
     @PreAuthorize("hasRole('ROLE_DEVELOPER')")
     public ResponseEntity<?> createTask(@RequestBody TaskPalladium task) {
         taskRepository.save(task);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Task successfully created");
     }
 
     @PutMapping("/edit")
