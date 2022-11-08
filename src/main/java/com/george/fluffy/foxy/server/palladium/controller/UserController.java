@@ -1,6 +1,7 @@
 package com.george.fluffy.foxy.server.palladium.controller;
 
 import com.george.fluffy.foxy.server.auth.request.SignupRequest;
+import com.george.fluffy.foxy.server.auth.response.MessageResponse;
 import com.george.fluffy.foxy.server.palladium.model.user.ERole;
 import com.george.fluffy.foxy.server.palladium.model.user.Role;
 import com.george.fluffy.foxy.server.palladium.model.user.UserPalladium;
@@ -33,32 +34,32 @@ public class UserController {
     PasswordEncoder encoder;
 
     @GetMapping("/get/all")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public List<UserPalladium> getAllUsers() {
         return userPalladiumRepository.findAll();
     }
 
     @GetMapping("/get/all/roles")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
     @GetMapping("/get/all/users")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public List<UserPalladium> getUsersByRoleName(@RequestParam("name") ERole name) {
         return userPalladiumRepository.findByRoles_Name(name);
     }
 
     @GetMapping("/get/user")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public UserPalladium getUserById(@RequestParam(value = "id") long id) {
         return userPalladiumRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User with id " + id + " not found"));
     }
 
     @PutMapping("/edit")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> editUser(@RequestBody SignupRequest user,
                                       @RequestParam(value = "id") long id) {
 
@@ -83,28 +84,37 @@ public class UserController {
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "developer":
+                    case "ROLE_DEVELOPER":
                         Role developerRole = roleRepository.findByName(ERole.ROLE_DEVELOPER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(developerRole);
 
                         break;
-                    case "admin":
+
+                    case "ROLE_ADMIN":
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
-                    case "executor":
+
+                    case "ROLE_EXECUTOR":
                         Role executorRole = roleRepository.findByName(ERole.ROLE_EXECUTOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(executorRole);
 
                         break;
-                    default:
+
+                    case "ROLE_USER":
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                         roles.add(userRole);
+
+                        break;
+                    default:
+                        Role defaultRole = roleRepository.findByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(defaultRole);
                 }
             });
         }
@@ -112,24 +122,19 @@ public class UserController {
         updateUser.setRoles(roles);
         userPalladiumRepository.save(updateUser);
 
-        return ResponseEntity.status(HttpStatus.OK).body("User successfully edited");
+        return ResponseEntity.ok(new MessageResponse("User successfully edited"));
     }
 
     @DeleteMapping("/delete")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteUser(@RequestParam(value = "id") long id) {
         userPalladiumRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User with id " + id + " not found")
         );
 
-        roleRepository.findById((int) id).orElseThrow(
-                () -> new ResourceNotFoundException("User with id " + id + " not found ")
-        );
-
         userPalladiumRepository.deleteById(id);
-        roleRepository.deleteById((int) id);
 
-        return ResponseEntity.status(HttpStatus.OK).body("User successfully deleted");
+        return ResponseEntity.ok(new MessageResponse("User successfully deleted"));
     }
 
 }
