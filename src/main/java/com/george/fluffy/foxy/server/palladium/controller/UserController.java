@@ -132,12 +132,7 @@ public class UserController {
                 () -> new ResourceNotFoundException("User with id " + id + " not found")
         );
 
-        roleRepository.findById((int) id).orElseThrow(
-                () -> new ResourceNotFoundException("User with id " + id + " not found ")
-        );
-
         userPalladiumRepository.deleteById(id);
-        roleRepository.deleteById((int) id);
 
         return ResponseEntity.ok(new MessageResponse("User successfully deleted"));
     }
