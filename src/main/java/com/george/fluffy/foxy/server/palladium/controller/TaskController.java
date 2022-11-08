@@ -1,5 +1,6 @@
 package com.george.fluffy.foxy.server.palladium.controller;
 
+import com.george.fluffy.foxy.server.auth.response.MessageResponse;
 import com.george.fluffy.foxy.server.palladium.model.TaskPalladium;
 import com.george.fluffy.foxy.server.palladium.repository.TaskPalladiumRepository;
 import com.george.fluffy.foxy.server.utils.ResourceNotFoundException;
@@ -24,7 +25,7 @@ public class TaskController {
     @PreAuthorize("hasRole('ROLE_DEVELOPER')")
     public ResponseEntity<?> createTask(@RequestBody TaskPalladium task) {
         taskRepository.save(task);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Task successfully created");
+        return ResponseEntity.ok(new MessageResponse("Task successfully created!"));
     }
 
     @PutMapping("/edit")
@@ -53,7 +54,7 @@ public class TaskController {
 
         taskRepository.save(updateTask);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Task successfully edited");
+        return ResponseEntity.ok(new MessageResponse("Task successfully edited"));
     }
 
     @DeleteMapping("/delete")
@@ -66,7 +67,7 @@ public class TaskController {
 
         taskRepository.deleteById(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Task successfully deleted");
+        return ResponseEntity.ok(new MessageResponse("Task successfully deleted"));
     }
 
     @GetMapping("/get/byExecutor")
