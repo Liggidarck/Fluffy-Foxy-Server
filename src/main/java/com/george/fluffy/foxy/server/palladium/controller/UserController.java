@@ -1,6 +1,7 @@
 package com.george.fluffy.foxy.server.palladium.controller;
 
 import com.george.fluffy.foxy.server.auth.request.SignupRequest;
+import com.george.fluffy.foxy.server.auth.response.MessageResponse;
 import com.george.fluffy.foxy.server.palladium.model.user.ERole;
 import com.george.fluffy.foxy.server.palladium.model.user.Role;
 import com.george.fluffy.foxy.server.palladium.model.user.UserPalladium;
@@ -121,7 +122,7 @@ public class UserController {
         updateUser.setRoles(roles);
         userPalladiumRepository.save(updateUser);
 
-        return ResponseEntity.status(HttpStatus.OK).body("User successfully edited");
+        return ResponseEntity.ok(new MessageResponse("User successfully edited"));
     }
 
     @DeleteMapping("/delete")
@@ -138,7 +139,7 @@ public class UserController {
         userPalladiumRepository.deleteById(id);
         roleRepository.deleteById((int) id);
 
-        return ResponseEntity.status(HttpStatus.OK).body("User successfully deleted");
+        return ResponseEntity.ok(new MessageResponse("User successfully deleted"));
     }
 
 }
