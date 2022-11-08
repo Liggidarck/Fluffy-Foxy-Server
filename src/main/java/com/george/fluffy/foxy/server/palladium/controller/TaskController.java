@@ -22,14 +22,14 @@ public class TaskController {
 
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')  ")
     public ResponseEntity<?> createTask(@RequestBody TaskPalladium task) {
         taskRepository.save(task);
         return ResponseEntity.ok(new MessageResponse("Task successfully created!"));
     }
 
     @PutMapping("/edit")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> editTask(@RequestBody TaskPalladium task,
                                       @RequestParam(value = "id") long id) {
 
@@ -58,7 +58,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/delete")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteTask(@RequestParam(value = "id") long id) {
 
         taskRepository.findById(id).orElseThrow(
@@ -71,44 +71,44 @@ public class TaskController {
     }
 
     @GetMapping("/get/byExecutor")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public List<TaskPalladium> getTasksByExecutor(@RequestParam(value = "id") int id) {
         return taskRepository.getByExecutorId(id);
     }
 
     @GetMapping("/get/byCreator")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public List<TaskPalladium> getTasksByCreator(@RequestParam(value = "id") int id) {
         return taskRepository.getByCreatorId(id);
     }
 
     @GetMapping("/get/byStatus")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public List<TaskPalladium> getTasksByStatus(@RequestParam(value = "status") String status) {
         return taskRepository.findByStatus(status);
     }
 
     @GetMapping("/get/byZone")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public List<TaskPalladium> getTasksByZone(@RequestParam(value = "zone") String zone) {
         return taskRepository.findByZoneLike(zone);
     }
 
     @GetMapping("/get/byZoneAndStatus")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public List<TaskPalladium> getByZoneLikeAndStatusLike(@RequestParam(value = "zone") String zone,
                                                           @RequestParam(value = "status") String status) {
         return taskRepository.getByZoneLikeAndStatusLike(zone, status);
     }
 
     @GetMapping("/get/all")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public List<TaskPalladium> getAllTasks() {
         return (List<TaskPalladium>) taskRepository.findAll();
     }
 
     @GetMapping("/get/byId")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public TaskPalladium getTask(@RequestParam(value = "id") long id) {
         return taskRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Task with id " + id + " not found")

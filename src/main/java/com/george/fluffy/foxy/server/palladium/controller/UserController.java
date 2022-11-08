@@ -34,32 +34,32 @@ public class UserController {
     PasswordEncoder encoder;
 
     @GetMapping("/get/all")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public List<UserPalladium> getAllUsers() {
         return userPalladiumRepository.findAll();
     }
 
     @GetMapping("/get/all/roles")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
     @GetMapping("/get/all/users")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public List<UserPalladium> getUsersByRoleName(@RequestParam("name") ERole name) {
         return userPalladiumRepository.findByRoles_Name(name);
     }
 
     @GetMapping("/get/user")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public UserPalladium getUserById(@RequestParam(value = "id") long id) {
         return userPalladiumRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User with id " + id + " not found"));
     }
 
     @PutMapping("/edit")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> editUser(@RequestBody SignupRequest user,
                                       @RequestParam(value = "id") long id) {
 
@@ -126,7 +126,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteUser(@RequestParam(value = "id") long id) {
         userPalladiumRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User with id " + id + " not found")
