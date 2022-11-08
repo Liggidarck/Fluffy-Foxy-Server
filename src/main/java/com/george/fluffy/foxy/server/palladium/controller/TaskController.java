@@ -70,6 +70,21 @@ public class TaskController {
         return ResponseEntity.ok(new MessageResponse("Task successfully deleted"));
     }
 
+    @GetMapping("/get/countByStatus")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> countByZoneLikeAndStatusLike(@RequestParam(value = "zone") String zone,
+                                                          @RequestParam(value = "status") String status) {
+        long count = taskRepository.countByZoneLikeAndStatusLike(zone, status);
+        return ResponseEntity.ok(new MessageResponse("" + count));
+    }
+
+    @GetMapping("/get/countByZoneLike")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> countByZoneLike(@RequestParam(value = "zone") String zone) {
+        long count = taskRepository.countByZoneLike(zone);
+        return ResponseEntity.ok(new MessageResponse("" + count));
+    }
+
     @GetMapping("/get/byExecutor")
     @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public List<TaskPalladium> getTasksByExecutor(@RequestParam(value = "id") int id) {
