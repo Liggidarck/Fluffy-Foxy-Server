@@ -29,7 +29,7 @@ public class TaskController {
     }
 
     @PutMapping("/edit")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EXECUTOR')")
     public ResponseEntity<?> editTask(@RequestBody TaskPalladium task,
                                       @RequestParam(value = "id") long id) {
 
