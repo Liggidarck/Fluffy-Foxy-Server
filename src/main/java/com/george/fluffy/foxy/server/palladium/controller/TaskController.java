@@ -94,7 +94,7 @@ public class TaskController {
     }
 
     @GetMapping("/get/byExecutor")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EXECUTOR')")
     public List<TaskPalladium> getTasksByExecutor(@RequestParam(value = "id") int id) {
         return taskRepository.getByExecutorId(id);
     }
@@ -131,7 +131,7 @@ public class TaskController {
     }
 
     @GetMapping("/get/byId")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') or hasRole('ROLE_EXECUTOR')")
     public TaskPalladium getTask(@RequestParam(value = "id") long id) {
         return taskRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Task with id " + id + " not found")
