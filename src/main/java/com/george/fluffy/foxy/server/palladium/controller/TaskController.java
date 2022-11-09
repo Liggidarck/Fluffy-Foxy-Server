@@ -85,6 +85,14 @@ public class TaskController {
         return ResponseEntity.ok(new MessageResponse("" + count));
     }
 
+    @GetMapping("/get/byZoneAndStatusAndExecutorIdLike")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
+    public List<TaskPalladium> getByZoneLikeAndStatusLikeAndExecutorId(@RequestParam(value = "zone") String zone,
+                                                                       @RequestParam(value = "status") String status,
+                                                                       @RequestParam(value = "executorId") int executorId) {
+        return taskRepository.getByZoneLikeAndStatusLikeAndExecutorId(zone, status, executorId);
+    }
+
     @GetMapping("/get/byExecutor")
     @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public List<TaskPalladium> getTasksByExecutor(@RequestParam(value = "id") int id) {

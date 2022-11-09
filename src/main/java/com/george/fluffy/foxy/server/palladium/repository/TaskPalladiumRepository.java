@@ -13,7 +13,7 @@ public interface TaskPalladiumRepository extends CrudRepository<TaskPalladium, L
     long countByZoneLikeAndStatusLike(String zone, String status);
 
     long countByZoneLike(String zone);
-
+    List<TaskPalladium> getByZoneLikeAndStatusLikeAndExecutorId(String zone, String status, int executorId);
 
     List<TaskPalladium> getByZoneLikeAndStatusLike(String zone, String status);
     List<TaskPalladium> findByStatus(String status);
