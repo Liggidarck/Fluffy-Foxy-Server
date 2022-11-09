@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @GetMapping("/get/user")
-    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_EXECUTOR')")
     public UserPalladium getUserById(@RequestParam(value = "id") long id) {
         return userPalladiumRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User with id " + id + " not found"));
