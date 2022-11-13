@@ -70,7 +70,7 @@ public class TaskController {
         return ResponseEntity.ok(new MessageResponse("Task successfully deleted"));
     }
 
-    @GetMapping("/get/countByStatus")
+    @GetMapping("/get/countByZoneAndStatus")
     @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> countByZoneLikeAndStatusLike(@RequestParam(value = "zone") String zone,
                                                           @RequestParam(value = "status") String status) {
@@ -78,7 +78,7 @@ public class TaskController {
         return ResponseEntity.ok(new MessageResponse("" + count));
     }
 
-    @GetMapping("/get/countByZoneLike")
+    @GetMapping("/get/countByZone")
     @PreAuthorize("hasRole('ROLE_DEVELOPER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> countByZoneLike(@RequestParam(value = "zone") String zone) {
         long count = taskRepository.countByZoneLike(zone);
